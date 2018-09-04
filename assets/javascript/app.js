@@ -37,7 +37,7 @@ let questions = [
     },
     {
         id: 6,
-        question: 'What colour is a Welsh poppy?',
+        question: 'What color is a Welsh poppy?',
         choices: ['Yellow', 'Red', 'Blue', 'White', 'Pink'],
         answer: 'Yellow'
     },
