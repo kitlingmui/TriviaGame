@@ -55,3 +55,13 @@ p{
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     position: relative;
 }
+
+#startGamebtn{
+    font-size: 100px;
+    padding: 10px 50px;
+    border-radius: 20;
+}
+
+li{
+    list-style: none;
+}

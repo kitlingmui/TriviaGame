@@ -1,5 +1,3 @@
-var yourtime = 60
-
 let questions = [
     {
         id: 0,
@@ -62,13 +60,15 @@ let questions = [
         answer: 'Ears'
     }
 ]
+var yourtime = 60;
+var myanswer = [];
 
 
 // Display Choice List
 function displayChoice(queid, arr){
    var options = '';
    for(let i=0; i<arr.length; i++){
-    console.log(queid+arr[i])
+    //console.log(queid+arr[i])
           options = options + 
                     `<p>
                     <label class="radio">
@@ -101,6 +101,10 @@ function startGame(){
     $('.content').append(`<div class="container"></div>`)
     $('.content').append(`<button id="submit" class="btn btn-primary" type="submit">Submit</button>`)
     displayQuestion()  
+    for(let i=0; i<questions.length; i++){
+        myanswer[i] = ''
+    }
+
 }
 
 // Convert time in MM:SS display format
@@ -134,26 +138,38 @@ setInterval(function() {
 
 // Get and Display Result
 function getResult(){
-    count = 0
-    for(let i = 0; i <questions.length; i++){
-        if (window[`qChoice${i}`] === questions[i].correct){
-            count++
+    
+    // Log Result 
+    for(let k = 0; k < myanswer.length; k++){
+        console.log('Correct Ans: ' + questions[k].answer + '; My Answer: ' + myanswer[k]) 
+    }
+
+    let correctCtn = 0;
+    let unanswerdCtn = 0;
+
+    for(let i = 0; i < questions.length; i++){
+        if (myanswer[i] === '')
+        {
+            unanswerdCtn++;
+        }
+        else if (myanswer[i] === questions[i].answer){             
+            correctCtn++
         }
     }
+
     $('.content').html(`<div">
                             <li class="result">Finished!</li>
-                            <li class="result">Correction Answer: ${count}</li>
-                            <li class="result">InCorrect Answer: ${questions.length-count}</li>
-                            <li class="result">Unanswerd:</li>
+                            <li class="result">Correction Answer: ${correctCtn}</li>
+                            <li class="result">InCorrect Answer: ${questions.length-correctCtn-unanswerdCtn}</li>
+                            <li class="result">Unanswerd:${unanswerdCtn}</li>
                         </div>`
                       )
 }
 
 // Game Start Here 
-$('#startGame').on("click", function(){
+$('#startGamebtn').on("click", function(){
    startGame()
 })
-
 
 // Submit Answer and Get Result
 $(document).on('click', "#submit", function () {
@@ -161,8 +177,5 @@ $(document).on('click', "#submit", function () {
 })
 
 $(document).on('click', '.choice', function(){
-    console.log($(this).attr('name'))
-    console.log($(this).attr('data-choice'))
-    let choicekey = $(this).attr('name').split('-')
-    console.log(choicekey)
+    myanswer[$(this).attr('name')] = $(this).attr('data-choice')   
 })
